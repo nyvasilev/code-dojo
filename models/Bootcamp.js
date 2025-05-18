@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const BootCampSchema = new mongoose.Schema({
+const BootcampSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please add a name"],
@@ -102,3 +102,5 @@ export const BootCampSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+export const Bootcamp = mongoose.model("Bootcamp", BootcampSchema);

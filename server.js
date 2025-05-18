@@ -7,6 +7,9 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+// Body parser
+app.use(express.json());
+
 //Dev logging middleware
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -17,8 +20,6 @@ connectDB();
 
 // Routes
 app.use("/api/v1/bootcamps", bootcamps);
-
-console.log(process.env.MONGO_URI);
 
 const server = app.listen(
   PORT,
