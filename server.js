@@ -2,6 +2,7 @@ import express from "express";
 import bootcamps from "./routes/bootcamps.js";
 import morgan from "morgan";
 import { connectDB } from "./config/database.js";
+import { errorHandler } from "./middleware/error.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -20,6 +21,7 @@ connectDB();
 
 // Routes
 app.use("/api/v1/bootcamps", bootcamps);
+app.use(errorHandler);
 
 const server = app.listen(
   PORT,
