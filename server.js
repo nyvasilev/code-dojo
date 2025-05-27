@@ -4,7 +4,8 @@ import morgan from "morgan";
 import { connectDB } from "./config/database.js";
 import { errorHandler } from "./middleware/error.js";
 
-const PORT = process.env.PORT || 5000;
+// Connect to database
+connectDB();
 
 const app = express();
 
@@ -16,12 +17,12 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// Connect to database
-connectDB();
-
 // Routes
 app.use("/api/v1/bootcamps", bootcamps);
+
 app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(
   PORT,

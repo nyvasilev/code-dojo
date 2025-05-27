@@ -3,7 +3,7 @@ export const createError = (
   statusCode = 500,
   meta = { details: null },
 ) => ({
-  ...new Error(message),
+  message,
   statusCode,
   ...meta,
 });
