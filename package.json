@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node server",
-    "dev": "node --watch --env-file=.env server"
+    "dev": "node --watch --env-file=.env server",
+    "seeder-add": "node --env-file=.env seeder -i",
+    "seeder-delete": "node --env-file=.env seeder -d"
   },
   "author": "",
   "license": "ISC",
