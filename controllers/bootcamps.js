@@ -8,7 +8,13 @@ import { asyncHandler } from "../middleware/async.js";
 export const getBootcamps = asyncHandler(async (req, res, next) => {
   let query;
 
-  let queryStr = JSON.stringify(req.query);
+  let reqQuery = { ...req.req };
+
+  const removeFields = ["select", "sort"];
+
+  removeFields.forEach((param) => delete reqQuery[param]);
+
+  let queryStr = JSON.stringify(reqQuery);
 
   // Looking for: >,>=, <, <=, search a list
   queryStr = queryStr.replace(
@@ -17,6 +23,18 @@ export const getBootcamps = asyncHandler(async (req, res, next) => {
   );
 
   query = Bootcamp.find(JSON.parse(queryStr));
+
+  if (req.query.select) {
+    const fields = req.query.select.split(",").json(" ");
+    query = query.select(fields);
+  }
+
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(",").json(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt");
+  }
 
   const bootcamps = await query;
 
