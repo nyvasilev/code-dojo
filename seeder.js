@@ -2,7 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 import mongoose from "mongoose";
-import { Bootcamp } from "./models/Bootcamp.js";
+import { Bootcamp, Course } from "./models/index.js";
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
@@ -16,10 +16,15 @@ const bootcamps = JSON.parse(
   fs.readFileSync(`${__dirname}/data/bootcamps.json`, "utf-8"),
 );
 
+const courses = JSON.parse(
+  fs.readFileSync(`${__dirname}/data/courses.json`, "utf-8"),
+);
+
 // Import into DB
 const importData = async () => {
   try {
     await Bootcamp.create(bootcamps);
+    await Course.create(courses);
     console.log("Data imported...");
     process.exit();
   } catch (error) {
@@ -31,6 +36,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Bootcamp.deleteMany();
+    await Course.deleteMany();
     console.log("Data destroyed...");
     process.exit();
   } catch (error) {
