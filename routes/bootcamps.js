@@ -7,7 +7,11 @@ import {
   deleteBootcamp,
 } from "../controllers/bootcamps.js";
 
-const router = express.Router();
+import courseRouter from "./courses.js";
+
+const router = express.Router({ mergeParams: true });
+
+router.use("/bootcmpId/courses", courseRouter);
 
 router.route("/").get(getBootcamps).post(createBootcamp);
 
