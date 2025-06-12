@@ -22,7 +22,7 @@ export const getBootcamps = asyncHandler(async (req, res, next) => {
     (match) => `$${match}`,
   );
 
-  query = Bootcamp.find(JSON.parse(queryStr));
+  query = Bootcamp.find(JSON.parse(queryStr)).populate("courses");
 
   if (req.query.select) {
     const fields = req.query.select.split(",").json(" ");
@@ -126,6 +126,8 @@ export const deleteBootcamp = asyncHandler(async (req, res, next) => {
       details: error.stack,
     });
   }
+
+  bootcamp.remove();
 
   res.status(200).json({ success: true, data: {} });
 });
