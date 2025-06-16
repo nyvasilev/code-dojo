@@ -114,15 +114,15 @@ BootcampSchema.pre("save", async function (next) {
   next();
 });
 
-Bootcamp.pre("remove", async function (next) {
+BootcampSchema.pre("remove", async function (next) {
   await this.model("Course").deleteMany({ bootcamp: this._id });
   next();
 });
 
-Bootcamp.virtual("courses", {
+BootcampSchema.virtual("courses", {
   ref: "Course",
   localField: "_id",
-  foreignKey: "bootcamp",
+  foreignField: "bootcamp",
   justOne: false,
 });
 

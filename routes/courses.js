@@ -3,7 +3,6 @@ import {
   getCourses,
   getCourse,
   addCourse,
-  addCourse,
   deleteCourse,
 } from "../controllers/courses.js";
 

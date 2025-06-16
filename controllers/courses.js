@@ -31,7 +31,7 @@ export const getCourses = asyncHandler(async (req, res, next) => {
 // @desc         Get single courses
 // @route        GET /api/v1/courses/:id
 // @access       Public
-export const getCours = asyncHandler(async (req, res, next) => {
+export const getCourse = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.params.id).populate({
     path: "bootcamp",
     select: "name description",
