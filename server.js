@@ -1,5 +1,5 @@
 import express from "express";
-import { bootcamps, courses } from "./routes/index.js";
+import { bootcamps, courses, auth } from "./routes/index.js";
 import morgan from "morgan";
 import { connectDB } from "./config/database.js";
 import { errorHandler } from "./middleware/error.js";
@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === "development") {
 // Routes
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
+app.use("/api/v1/auth", auth);
 
 app.use(errorHandler);
 

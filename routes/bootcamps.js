@@ -6,6 +6,8 @@ import {
   updateBootcamp,
   deleteBootcamp,
 } from "../controllers/bootcamps.js";
+import { advancedResults } from "../middleware/advancedResults.js";
+import { Bootcamp } from "../models/Bootcamp.js";
 
 import courseRouter from "./courses.js";
 
@@ -17,7 +19,7 @@ router.route("/").get(getBootcamps).post(createBootcamp);
 
 router
   .route("/:id")
-  .get(getBootcamp)
+  .get(advancedResults(Bootcamp, 'courses'), getBootcamp)
   .put(updateBootcamp)
   .delete(deleteBootcamp);
 
