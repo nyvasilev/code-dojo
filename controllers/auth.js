@@ -1,5 +1,5 @@
 import { User } from "../models";
-import { createError } from "../utils/errorResponse.js";
+import { createError, sendTokenResponse } from "../utils";
 import { asyncHandler } from "../middleware/async.js";
 
 // @desc         Register user
@@ -7,7 +7,6 @@ import { asyncHandler } from "../middleware/async.js";
 // @access       Public
 export const register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
-
   // Create user
   const user = User.create({
     name,
@@ -16,9 +15,7 @@ export const register = asyncHandler(async (req, res, next) => {
     role,
   });
 
-  const token = user.getSignedJwtToken();
-
-  res.status(200).json({ success: true, token });
+  sendTokenResponse(user, 200, res);
 });
 
 // @desc         Login user
@@ -46,8 +43,5 @@ export const login = asyncHandler(async (req, res, next) => {
     return next(createError("Invalid credentials", 401));
   }
 
-  // Create token
-  const token = user.getSignedJwtToken;
-
-  res.statue(200).json({ successa: true, token });
+  sendTokenResponse(user, 200, res);
 });

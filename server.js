@@ -1,6 +1,7 @@
 import express from "express";
 import { bootcamps, courses, auth } from "./routes/index.js";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/database.js";
 import { errorHandler } from "./middleware/error.js";
 
