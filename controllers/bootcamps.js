@@ -1,5 +1,5 @@
-import { Bootcamp } from "../models/Bootcamp.js";
-import { createError } from "../utils/errorResponse.js";
+import { Bootcamp } from "../models";
+import { createError } from "../utils";
 import { asyncHandler } from "../middleware/async.js";
 
 // @desc         Get All bootcamps
@@ -27,6 +27,22 @@ export const getBootcamp = asyncHandler(async (req, res, next) => {
 // @route        POST /api/v1/bootcamps
 // @access       Private
 export const createBootcamp = asyncHandler(async (req, res, next) => {
+  // Add user to req,body
+  req.body.user = req.user.id;
+
+  // Check for published bootcamp
+  const publishedBootcamp = await Bootcamp.findOne({ user: req.user.id });
+
+  // If the user is not an admin, they can only add one bootcamp
+  if (publishedBootcamp && req.user.role !== "admin") {
+    return next(
+      createError(
+        `The user with ID ${req.user.id} has already published a bootcamp`,
+        400,
+      ),
+    );
+  }
+
   const bootcamp = await Bootcamp.create(req.body);
 
   res.status(201).json({
